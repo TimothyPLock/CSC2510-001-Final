@@ -1,0 +1,24 @@
+---
+  - name: Install apache and node.js | Pull from branch test
+    hosts: webserverprod
+    tasks:
+      - name: install nodeJS
+        apt:
+          name: nodejs
+          state: latest
+
+      - name: install apache
+        apt:
+          name: apache2
+          state: latest
+
+      - name: copy script to web environment
+        copy:
+          src: "~/cloneProd.sh"
+          dest: "~/cloneProd.sh"
+          owner: root
+          group: root
+          mode: "0755"
+
+      - name: pull from git
+        ansible.builtin.script: ~/cloneProd.sh

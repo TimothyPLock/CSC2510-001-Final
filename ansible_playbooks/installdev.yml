@@ -1,0 +1,29 @@
+---
+  - name: Install apache, nodejs, mariaDB | Also pull from git branch dev
+    hosts: webserverdev
+    tasks:
+      - name: install nodeJS
+        apt:
+          name: nodejs
+          state: latest
+
+      - name: install apache
+        apt:
+          name: apache2
+          state: latest
+
+      - name: install mariadb
+        apt:
+          name: mariadb-server
+          state: latest
+
+      - name: copy script to web environment
+        copy:
+          src: "~/cloneDev.sh"
+          dest: "~/cloneDev.sh"
+          owner: root
+          group: root
+          mode: "0755"
+
+      - name: pull from git
+        ansible.builtin.script: ~/cloneDev.sh
